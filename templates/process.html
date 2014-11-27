@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block process %}
+
+<ul>
+	<li> <a href='javascript:void(0)' onclick=$.get('/process/start?id=1&csrfmiddlewaretoken={{csrf_token}}');alert('success');location.reload();>启动snort</a> </li>
+</ul>
+
+
+	<table class="table table-hover">
+	<tr><td>进程</td><td>详细信息</td><td>操作</td></tr>
+	{% for key,value in snort_commands.items %}
+		<tr><td>{{key}}</td><td>{{value}}</td> <td><a href=javascript:void(1) onclick=killProcess({{key}})>关闭</a><a href='/process/restart?id={{key}}'>重启</a></td></tr>
+	{% endfor %}
+	</table>
+	<script>
+		function killProcess(id){
+			$.get('/process/kill?id='+id+'&csrfmiddlewaretoken={{csrf_token}}', function(data){
+				if (data == '1'){
+					alert('success to del');
+					location.reload();
+				}
+				else{
+					alert('failed');
+				}
+			})
+		}
+	</script>
+
+
+{% endblock %}

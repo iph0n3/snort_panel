@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+
+{% block process %}
+	<table class="table table-hover">
+	<tr><td>进程</td><td>详细信息</td><td>操作</td></tr>
+	{% for key,value in snort_commands.items %}
+		<tr><td>{{key}}</td><td>{{value}}</td><td><a href='/process'>管理</a></td></tr>
+	{% endfor %}
+	</table>
+{% endblock %}
+
+
+{% block rules %}
+<table class="table table-hover">
+	<tr><td>规则库</td></tr>
+	{% for i in rules_sections %}
+	<tr><td>{{i.0|truncatewords:10}}</td><td>{{i.1|truncatewords:10}}</td><td><a href='/rules'>更多</a></td></tr>
+	{% endfor %}
+</table>
+{% endblock %}
+
+
+{% block alert %}
+<table class="table table-hover">
+	<tr><td>报警信息</td></tr>
+	{% for j in alert_sections %}
+	<tr><td>{{j|truncatewords:10}}</td><td><a href='/alert/'>更多</a></td></tr>
+	{% endfor %}
+</table>
+{% endblock %}
+
+

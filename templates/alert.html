@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block alert %}
+<table class="table table-hover">
+	<tr><td>报警信息</td></tr>
+	{% for j in alert_sections %}
+	<tr><td>{{j}}</td><td><a href=''>更多</a></td></tr>
+	{% endfor %}
+<table>
+<nav>
+	<ul class="pagination">
+
+    	
+        {% if alert_sections.has_previous %}
+           <li> <a href="?page={{ alert_sections.previous_page_number }}">前一页</a>
+        {% endif %}
+
+        
+            <li><a>{{ alert_sections.number }}/{{ alert_sections.paginator.num_pages }}</a></li>
+        
+
+        {% if alert_sections.has_next %}
+           <li> <a href="?page={{ alert_sections.next_page_number }}">下一页</a></li>
+        {% endif %}
+    
+    </ul>
+</nav>
+{% endblock %}

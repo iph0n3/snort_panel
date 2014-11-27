@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block rules %}
+
+<div>
+	<ul>
+		<li> <a href=javascript:$('#add').toggle()>增加</a> </li>
+
+	<!--<form action="/rules/add" method="POST" id="add_rules">{% csrf_token %}-->
+		
+			<div style="display:none" class="input-group" id='add'>
+				<input type='text' class="form-control" name='rule' onkeypress=checkVal('.form-control')>
+				<span class="input-group-btn">
+				<input class="btn btn-default" type="submit" value='提交' onclick=checkSubmit()>
+				</span>
+			</div>
+		
+	</ul>
+</div>
+<script>
+function checkVal(key){
+		var rule = $(key).val();
+		var count = rule.indexOf('sid:');
+		//alert(count)
+		if ( count >0 ) {
+			//alert(1)
+			$('.form-control').attr('style', 'color:blue')
+			return true;
+		}
+		else{
+			//alert(1)
+			$('.form-control').attr('style', 'color:red')
+			return false;
+			//$('.form-control').attr('style', 'color:black')
+		}
+	
+}
+
+function checkSubmit() {
+
+  	txt=$(".form-control").val();
+  	//alert(txt);
+  	if (txt.indexOf('sid:') > 0) {
+  		$.post("/rules/add",{'rule':txt, 'csrfmiddlewaretoken':'{{csrf_token}}' } , function(data){
+  			if (data == '1'){
+  				alert('success');
+  				location.reload();
+  			}
+  			else{
+  				alert('failed');
+  			}
+  		});
+  		
+	}
+	else{
+		alert('rule wrong,must include sid:xxxxx');
+		$('.form-control').attr('style', 'color:red')
+	}
+	
+}
+
+
+</script>
+
+
+
+<table class="table table-hover">
+	
+	<tr>
+		<td>序列号</td>
+		<td>规则库</td>
+		<td>操作</td>
+	</tr>
+	
+	
+		
+	{% for key in rules_sections %}
+	<tr>	
+		<td>{{ key.0 }}</td>
+		<td>{{ key.1 }}
+			<div style="display:none" class="input-group" id='edit{{key.0}}'>
+				<textarea type='text' class="form-control" name='rule' onkeypress=checkVal('textarea.form-control') id='{{key.0}}'>{{key.1}}</textarea>
+				<span class="input-group-btn">
+				<input class="btn btn-default" type="submit" value='提交' onclick=checkSubmitEdit('{{key.0}}')>
+				</span>
+			</div>
+		</td>
+
+
+
+		<td>
+			<a href='javascript:void(0)' onclick=$('#edit{{key.0}}').toggle();>修改</a>
+			<a href='javascript:void(0)' onclick="delRules('{{key.0}}')">删除</a>
+		</td>
+		
+	</tr>
+	{% endfor %}
+
+	
+</table>
+<script>
+function checkSubmitEdit(id){
+		
+	var txt = $('#'+id).val();
+	if (txt.indexOf('sid:') > 0) {
+  		$.post("/rules/edit",{'rule':txt, 'id':id, 'csrfmiddlewaretoken':'{{csrf_token}}' }, function(data){
+  			if (data == '1') {
+  				alert('success');
+  				location.reload();
+  			}
+  			else {
+  				alert('failed');
+  			}	
+  		} );
+  		//alert('sucess');
+  		//location.reload();
+	}
+	else{
+		alert('rule wrong,must include sid:xxxxx');
+		$('#'+id).attr('style', 'color:red')
+	}
+}	
+function delRules(id){
+		var status = confirm('确认删除');
+		if (status){ 
+				$.get('/rules/del?id='+id+'&csrfmiddlewaretoken={{csrf_token}}', function(data){ 
+					if (data == '1'){
+						alert('suceess to del');
+						location.reload();
+					}
+					else{
+						alert('failed');
+					}
+				}
+				);
+		}
+}
+
+</script>
+
+
+
+
+
+
+{% endblock %}

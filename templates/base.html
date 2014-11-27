@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.js"></script>
+
+</head>
+<body>
+<div class="row">
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-10">
+	<nav class="navbar navbar-default" role="navigation">
+		<ul class="nav nav-tabs" role="tablist">
+		  <li role="presentation"><a href="/">首页</a></li>
+		  <li role="presentation"><a href="/process">管理监控</a></li>
+		  <li role="presentation"><a href="/rules">特征库定义</a></li>
+		  <li role="presentation"><a href="/alert">报警详情</a></li>
+		  <li role="presentation"><a href="/about">关于</a></li>
+		</ul>
+	</nav>
+
+	{% block about %}
+	{% endblock %}
+	{% block process %}
+	{% endblock %}
+
+	{% block  alert %}
+	{% endblock %}
+
+	{% block rules %}
+	{% endblock %}
+	</div>
+	<div class="col-md-1">
+	</div>
+</div>
+</body>	
+
+</html>
