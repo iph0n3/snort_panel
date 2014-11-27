@@ -1,4 +1,4 @@
-修改snort目录下的cong.ini
+修改snort目录下的config.ini
 
 其中path中
 rules_path 代表自定义规则库文件的地址
